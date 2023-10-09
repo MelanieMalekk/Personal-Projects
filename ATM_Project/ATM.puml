@@ -1,0 +1,73 @@
+@startuml ATMMachine
+!theme mars
+
+class ATM  
+{ 
+    - userAuthenticated : boolean
+    - userAccount : Account
+    - accounts : Account[]
+    - BALANCE_INQUIRY : int
+    - WITHDRAWAL : int
+    - DEPOSIT : int
+    - EXIT : int
+    + ATM()
+    - getAccount(int, int) : Account
+    + run() : void
+    - authenticateUser() : void
+    - performTransactions() : void
+    - displayMainMenu() : int
+    - createTransaction(int) : Transaction
+    + main(String[]) : void
+
+}
+
+class Account 
+{
+    - accountNumber : int
+    - pin : int
+    - balance : double
+    + Account(int, int, double)
+    + validatePIN(int) : boolean
+    + getBalance() : double
+    + debit(double) : void 
+    + credit(double) : void 
+    + getAccountNumber : int
+    + getAccountPin : int
+}
+
+class Transaction 
+{
+    # account : Account
+    + Transaction(Account) 
+    + execute() : void 
+}
+
+class Deposit implements Transaction
+{
+    - amount : double
+    - CANCELED : int
+    + Deposit(Account)
+    + execute() : void
+    - promptForDepositAmount() : double
+}
+
+class Withdrawal implements Transaction
+{
+    - amount : int
+    - CANCELED : int
+    + Withdrawal(Account)
+    + execute() : void 
+    - displayMenuOfAmounts() : int
+}
+
+class BalanceInquiry implements Transaction
+{
+    + BalanceInquiry(Account)
+    + execute() : void
+}
+
+ATM --> Account
+ATM --> Transaction
+Transaction --> Account
+
+@enduml

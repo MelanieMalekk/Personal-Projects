@@ -1,0 +1,211 @@
+ATM.java
+{
+    getAccount()
+    {
+        passer à travers le tableau des comptes
+        si le numéro de compte ET le code pin saisis par l'utilisateur correspondent à ceux du tableau
+        {
+            retourne le compte courant
+        } 
+        return null
+    }
+
+    run()
+    {
+        demander à l'utilisateur de saisir un numéro de compte et un code PIN
+        valider les valeurs saisies par rapport au tableau des comptes
+        si c'est validé
+        {
+            créer un objet Account
+            créer un objet Transaction et lui passer l'objet Account
+            exécuter la transaction
+        }
+    }
+
+    authenticateUser()
+    {
+        inviter l'utilisateur à saisir son numéro de compte
+        inviter l'utilisateur à saisir son mot de passe
+        appelle la méthode getAccount() pour tenter de créer un objet Account
+        si le compte est valide
+        {
+            un objet de type Account est créé avec les informations correctes du compte
+            l'utilisateur est maintenant authentifié
+        }
+        si l'utilisateur n'est pas authentifié
+        {
+            afficher un message à l'utilisateur lui indiquant que son entrée est incorrecte
+        }
+    }
+
+    performTransactions()
+    {
+        tant que l'utilisateur n'a pas quitté sa session
+        {
+            si sa sélection est l'une des trois transactions
+            {
+                créer un nouvel objet de type Transaction avec la transaction sélectionnée
+                exécuter la transaction
+            }
+            sinon, s'ils ont choisi de sortir
+            {
+                userExited = true
+            }
+            sinon
+            {
+                il n'a pas saisi de valeur valide
+            }
+        }
+    }
+
+    displayMainMenu()
+    {
+        afficher le menu principal des transactions et inviter l'utilisateur à sélectionner une option
+    }
+
+    createTransaction()
+    {
+         si transaction sélectionnée = BALANCE_INQUIRY
+        {
+            créer une nouvelle transaction de demande de solde
+        }
+        si la transaction sélectionnée = RETRAIT
+        {
+            créer une nouvelle transaction de retrait
+        }
+        if transaction selected = DEPOSIT
+        {
+            créer une nouvelle transaction de dépôt 
+        }
+        retourner le nouvel objet
+    }
+}
+
+Account.java
+{
+    validatePIN()
+    {
+        si le code pin saisi par l'utilisateur correspond au code pin du tableau
+        {
+            return true
+        }
+        si ce n'est pas le cas
+        {
+            return false
+        }
+    }
+
+    getBalance()
+    {
+        return balance
+    }
+
+    credit()
+    {
+        ajoute le montant au solde actuel
+    }
+
+    debit()
+    {
+        retire le montant du solde actuel
+    }
+
+    getAccountNumber()
+    {
+        return account number
+    }
+
+    getAccountPin()
+    {
+        return pin
+    }
+}
+
+Transaction.java
+{
+    getAccount()
+    {
+        return account object
+    }
+    
+    déclarer la méthode execute()
+}
+
+BalanceInquiry.java
+{
+    execute()
+    {
+        récupère le solde du compte bancaire
+        imprime le solde 
+    }
+}
+
+Deposit.java
+{
+    execute()
+    {
+        si l'utilisateur n'a pas annulé la transaction
+        {
+            appelle la méthode credit() pour ajouter le montant au solde
+        }
+        sinon
+        {
+            imprime un message d'annulation
+        }
+    }
+
+    promptForDepositAmount()
+    {
+        inviter l'utilisateur à saisir le montant qu'il souhaite déposer (en dollars) ou 0 pour annuler.
+        s'il décide d'annuler 
+        {
+            return CANCELED
+        }
+        sinon
+        {
+            retourner leur entrée
+        }
+    }
+}
+
+Withdrawal.java
+{
+    execute()
+    {
+        si l'utilisateur n'a pas annulé la transaction
+        {
+            obtenir le solde du compte
+            si le montant à retirer est inférieur ou égal au solde du compte
+            {
+                appeler la méthode debit() pour soustraire le montant du solde
+            }
+            sinon
+            {
+                informer l'utilisateur que ses fonds sont insuffisants
+            }
+        }
+        else 
+        {
+            l'utilisateur a choisi d'annuler la transaction
+            retourner
+        }
+    }
+
+    displayMenuOfAmounts()
+    {
+        inviter l'utilisateur à sélectionner un montant à retirer
+        s'il choisit un montant
+        {
+            son choix sera enregistré 
+        }
+        sinon, s'il choisit d'annuler
+        {
+            userChoice = CANCELED
+        }
+        else
+        {
+            il n'a pas choisi une option valide
+        }
+        return userChoice
+    }
+}
